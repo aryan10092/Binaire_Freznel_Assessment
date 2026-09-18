@@ -1,5 +1,20 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, dialog, ipcMain } = require('electron')
 const path = require('node:path')
+const sharp = require('sharp')
+
+function registerIpcHandlers() {
+  ipcMain.handle('save-avif', async (_event, pngBase64) => {
+    const result = await dialog.showSaveDialog({
+      defaultPath: 'panorama.avif',
+      filters: [{ name: 'AVIF image', extensions: ['avif'] }],
+    })
+
+    if (result.canceled || !result.filePath) return false
+
+    await sharp(Buffer.from(pngBase64, 'base64')).avif().toFile(result.filePath)
+    return true
+  })
+}
 
 function createWindow() {
   const window = new BrowserWindow({
@@ -17,7 +32,10 @@ function createWindow() {
   window.loadURL('http://localhost:5173')
 }
 
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+  registerIpcHandlers()
+  createWindow()
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
