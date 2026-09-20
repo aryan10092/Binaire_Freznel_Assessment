@@ -1,7 +1,6 @@
 
 export type ProjectionType = 'cylindrical' | 'spherical'
 
-
 export type SelectedImage = {
   file: File
   previewUrl: string

@@ -16,8 +16,7 @@ import type {
 
 function App() {
   const [images, setImages] = useState<SelectedImage[]>([])
-  const [opencvReady, setOpencvReady] = useState(
-    () => Boolean(window.__opencvReady),)
+  const [opencvReady, setOpencvReady] = useState( () => Boolean(window.__opencvReady))
 
   const [stitching, setStitching] = useState(false)
   const [stitchError, setStitchError] = useState('')
@@ -25,12 +24,13 @@ function App() {
   const [outputFormat, setOutputFormat] = useState<OutputFormat>('png')
   const [exportError, setExportError] = useState('')
   const [projection, setProjection] = useState<ProjectionType>('cylindrical')
+
   const [viewerTransform, setViewerTransform] = useState<ViewerTransform>({x: 0,y: 0,zoom: 1,rotation: 0})
 
   const previewCanvas = useRef<HTMLCanvasElement>(null)
   const panoramaStitcher = useRef(new PanoramaStitcher())
-  const dragStart = useRef<{
-    x: number, y: number,  viewerX: number,viewerY: number} | null>(null)
+
+  const dragStart = useRef<{x: number, y: number,  viewerX: number,viewerY: number} | null>(null)
 
   useEffect(() => {
     const handleOpenCvReady = () => setOpencvReady(true)
@@ -43,12 +43,11 @@ function App() {
     const selectedImages = Array.from(event.target.files ?? [])
     
     //console.log("Selected imagesss",selectedImages)
-
     const newImages = selectedImages.map((file) => ({
       file, previewUrl: URL.createObjectURL(file)}))
 
     setImages((currentImages) => [...currentImages, ...newImages])
-    setPanoramaCreated(false)
+     setPanoramaCreated(false)
     setExportError('')
     event.target.value = ''
   }

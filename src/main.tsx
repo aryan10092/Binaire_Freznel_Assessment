@@ -14,6 +14,7 @@ declare global {
 async function initializeOpenCV() {
   try {
     const cv = await cvPromise
+    //console.log("OpenCV", cv)
     window.cv = cv
     window.__opencvReady = true
     window.dispatchEvent(new Event('opencv-ready'))
