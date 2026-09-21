@@ -28,9 +28,12 @@ Install dependencies:
 ```bash
 npm install
 ```
+
 Set environment:
 
-set NODE_ENV=development
+```bash
+NODE_ENV=development
+```
 
 Start the React app:
 
